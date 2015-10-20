@@ -1,0 +1,54 @@
+<div class="row" ng-controller="FacebookCtrl">
+      <div class="col-md-4">
+          <h4>{{welcomeMsg}}</h4>
+
+          <div ng-if= "isLoggedIn == true">
+             <a href="{{userInfo.link" target="_blank"><img ng-src="{{picture}}"></a>
+          </div>
+          <br><br>
+
+          <!-- The most simplest use of the ng-if statement as far as showing buttons -->
+          <div ng-if="isLoggedIn == false">
+              <button type="button" class="btn btn-default" ng-click="login()">Log In</button>
+          </div>
+
+          <div ng-if="isLoggedIn == true">
+              <button type="button" class="btn btn-default" ng-click="logout()">Log Out</button>
+          </div>
+
+
+
+          <br>
+          <br>
+
+          <div class="well" ng-if="isLoggedIn == true">
+            <h4>User Information</h4>
+            <ul>
+              <li>ID: {{userInfo.id}}</li>
+              <li>First Name: {{userInfo.first_name}}</li>
+              <li>Last Name: {{userInfo.last_name}}</li>
+              <li>Email: {{userInfo.email}}</li>
+              <li>Gender: {{userInfo.gender}}</li>
+              <li>Locale: {{userInfo.locale}}</li>
+            </ul>
+
+          </div>
+
+          <br>
+
+          <div class="well">
+            <h4>Permissions</h4>
+            <li></li>
+          </div>
+      </div>
+      <div class="col-md-8">
+        <h3>Welcome to Facebook!</h3>
+          <form>
+            <div class="form-group">
+              <label>Status Update</label>
+              <textarea class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+      </div>
+    </div>
