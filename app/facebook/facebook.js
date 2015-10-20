@@ -13,7 +13,7 @@ angular.module('ngSocial.facebook', ['ngRoute', 'ngFacebook'])
 //ADDS FACEBOOK APP ID AND THE LIST OF PERMISSIONS FOR THE APPLICATION
 .config( function ($facebookProvider){
 	$facebookProvider.setAppId('330433383798478');
-	$facebookProvider.setPermissions("email","public_profile", "user_posts", "publish_actions", "user_photos");
+	$facebookProvider.setPermissions("email, public_profile, user_posts, publish_actions, user_photos");
 })
 
 //FACEBOOK SDK FOR THE FACEBOOK API
@@ -59,6 +59,13 @@ angular.module('ngSocial.facebook', ['ngRoute', 'ngFacebook'])
       $scope.userInfo = response; 
       $facebook.api('/me/picture').then(function(response){
         $scope.picture = response.data.url; 
+        $facebook.api('/me/permissions').then(function(response){
+            $scope.permissions = response.data;
+            $facebook.api('/me/posts').then(function(response){
+                $scope.posts = response.data;
+                console.log(response.data);
+            })
+        }); 
       })
     },
 
@@ -67,6 +74,16 @@ angular.module('ngSocial.facebook', ['ngRoute', 'ngFacebook'])
       $scope.welcomeMsg = "Please Log In"; 
     });
 
+  }
+
+  //post status to Facebook through the ngSocial
+  $scope.postStatus = function(){
+    var body = this.body; // => takes the content that is in the post and store it into a variable called "body"
+
+    $facebook.api('/me/feed', 'post', {message: body}).then(function(response){
+      $scope.msg = 'Thanks For Posting'; 
+      refresh(); 
+    });
   }
 
   refresh();
